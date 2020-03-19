@@ -12,7 +12,6 @@ import java.time.LocalDate;
 public class RowMapperFactory {
 
     public RowMapper<Employee> employeeRowMapper() {
-        throw new UnsupportedOperationException();
 
         return resultSet -> {
             try {
