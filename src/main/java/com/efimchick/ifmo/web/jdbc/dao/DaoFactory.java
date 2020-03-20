@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class DaoFactory {
-    private Employee newEmployee(ResultSet set){
+    private Employee newEmployee(ResultSet set) {
         try {
             return new Employee(
                     new BigInteger(set.getString("id")),
@@ -28,22 +28,22 @@ public class DaoFactory {
                     BigInteger.valueOf(set.getInt("manager")),
                     BigInteger.valueOf(set.getInt("department")));
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new UnsupportedOperationException();
         }
     }
 
-    private ResultSet executeRequest(String request){
+    private ResultSet executeRequest(String request) {
         try {
             return ConnectionSource.instance().createConnection().createStatement().executeQuery(request);
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new UnsupportedOperationException();
         }
     }
 
-    private Department newDepartment(ResultSet resultSet){
+    private Department newDepartment(ResultSet resultSet) {
         try {
             return new Department(new BigInteger(resultSet.getString("id")),
                     resultSet.getString("name"),
@@ -67,7 +67,7 @@ public class DaoFactory {
                     }
 
                     return employees;
-                } catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                     throw new UnsupportedOperationException();
                 }
@@ -84,7 +84,7 @@ public class DaoFactory {
                     }
 
                     return employees;
-                } catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                     throw new UnsupportedOperationException();
                 }
@@ -99,7 +99,7 @@ public class DaoFactory {
                         return Optional.of(newEmployee(resultSet));
                     else
                         return Optional.empty();
-                } catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                     return Optional.empty();
                 }
@@ -116,7 +116,7 @@ public class DaoFactory {
                     }
 
                     return employees;
-                } catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                     throw new UnsupportedOperationException();
                 }
@@ -143,7 +143,7 @@ public class DaoFactory {
                 try {
                     ConnectionSource.instance().createConnection().createStatement().execute(
                             "DELETE FROM employee WHERE ID = " + employee.getId().toString());
-                } catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                     throw new UnsupportedOperationException();
                 }
@@ -162,7 +162,7 @@ public class DaoFactory {
                         return Optional.of(newDepartment(resultSet));
                     else
                         return Optional.empty();
-                } catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                     return Optional.empty();
                 }
@@ -180,7 +180,7 @@ public class DaoFactory {
                     }
 
                     return deps;
-                } catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                     throw new UnsupportedOperationException();
                 }
@@ -190,14 +190,14 @@ public class DaoFactory {
             public Department save(Department department) {
                 if (getById(department.getId()).equals(Optional.empty())) {
                     executeRequest("INSERT INTO department VALUES ('" +
-                            department.getId()       + "', '" +
-                            department.getName()     + "', '" +
+                            department.getId() + "', '" +
+                            department.getName() + "', '" +
                             department.getLocation() + "')");
                 } else {
                     executeRequest("UPDATE department SET " +
-                            "NAME = '"     + department.getName()     + "', " +
+                            "NAME = '" + department.getName() + "', " +
                             "LOCATION = '" + department.getLocation() + "' " +
-                            "WHERE ID = '" + department.getId()       + "'");
+                            "WHERE ID = '" + department.getId() + "'");
                 }
 
                 return department;
@@ -208,7 +208,7 @@ public class DaoFactory {
                 try {
                     ConnectionSource.instance().createConnection().createStatement().execute(
                             "DELETE FROM department WHERE ID = " + department.getId().toString());
-                } catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                     throw new UnsupportedOperationException();
                 }
